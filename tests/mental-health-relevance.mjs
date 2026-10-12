@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -7,6 +8,13 @@ import path from 'node:path';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_PACKAGE || 'playwright');
 const base = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// Version every changed preview asset so returning visitors cannot reuse stale JS/CSS.
+const html = await readFile(path.join(base, 'index.html'), 'utf8');
+for (const asset of ['mental-health-relevance.js', 'mental-health-relevance.css']) {
+  const content = (await readFile(path.join(base, asset), 'utf8')).replace(/\r\n/g, '\n');
+  const version = createHash('sha256').update(content).digest('hex').slice(0, 12);
+  assert.ok(html.includes(`${asset}?v=${version}`), `Update the ${asset} content-version in index.html`);
+}
 const shots = path.join(base, 'shots', 'mental-health-relevance');
 await mkdir(shots, { recursive: true });
 const browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}) });
