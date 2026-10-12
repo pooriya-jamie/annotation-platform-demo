@@ -19,6 +19,7 @@ videos or screenshots.
 |---|------|---------------|
 | 1 | `#annotator` | One annotator's path in a browser frame: sign in → consent → My Tasks → training (5 worked examples + 5 practice items) → Mental Health safety orientation → task advisory → the three-column workspace → task complete |
 | 2 | `#manager` | The staff console: Upload (dry run, then commit), Datasets, Tasks (activate / pause / archive, split items with an overlap), Progress (per-annotator counts, needs-review list, percent agreement and Cohen's κ, the two-reviews-per-post agreement lab with a blinded third review and majority labels), Accounts, Training & Gold, Topics & Forms (versioned codebooks), Exports (a real CSV/JSON file is generated in the browser) |
+| 3 | `#mental-health-relevance` | Dedicated Mental Health — Video Relevance participant preview: instructions, responsive video-first workspace, one required answer, fallback screenshot viewer, breaks, safety skips, draft/save/retry behavior. TikTok, YouTube, and unavailable-player scenarios use illustrated placeholders, not study data. |
 
 The two sections share one in-memory state. Labels saved in section 1 appear
 in section 2's Progress and agreement numbers at once. Pausing a task in
@@ -50,6 +51,18 @@ function names sit behind "For technical readers" toggles.
 - `data.js` — synthetic topics, forms, users, datasets, tasks, items, training examples, safety policy, consent, label generator
 - `app.js` — state, hash router, event delegation, dialog, toast, animation sequencer
 - `views-annotator.js`, `views-manager.js` — the two sections
+- `mental-health-relevance.js`, `mental-health-relevance.css` — isolated Mental Health relevance preview. No backend calls, external players, persistent storage, participant identifiers, or real evidence. Responses are temporary and reset on reload. Planned 100-video / eight-annotator totals are not imported or assigned records.
+
+## Mental Health preview verification
+
+Run `node tests/mental-health-relevance.mjs` with Playwright available. Set
+`PLAYWRIGHT_PACKAGE` to an installed Playwright package path if needed, and
+`PLAYWRIGHT_CHANNEL=msedge` to use an installed Edge browser. The check exercises
+both answers, validation, draft/save separation, simulated failed-save retry,
+skips, safety controls, dynamic screenshot counts, keyboard enlargement,
+mobile layout, reload isolation, both older tours, and zero external requests.
+It writes shareable instructions, desktop, and mobile images to the ignored
+`shots/mental-health-relevance/` directory.
 
 ## Privacy
 

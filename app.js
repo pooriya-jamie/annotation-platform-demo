@@ -189,8 +189,8 @@ window.App = (function () {
   /* Router                                                              */
   /* ------------------------------------------------------------------ */
 
-  const VIEWS = ['annotator', 'manager'];
-  const TITLES = { annotator: 'Annotator', manager: 'Study manager' };
+  const VIEWS = ['annotator', 'manager', 'mental-health-relevance'];
+  const TITLES = { annotator: 'Annotator', manager: 'Study manager', 'mental-health-relevance': 'Mental Health — Video Relevance' };
 
   function parseHash() {
     const raw = (location.hash || '#annotator').replace(/^#/, '');
@@ -219,6 +219,7 @@ window.App = (function () {
     opts = opts || {};
     const previous = S.route.view;
     S.route = parseHash();
+    document.body.classList.toggle('mh-preview-active', S.route.view === 'mental-health-relevance');
     VIEWS.forEach((name) => {
       document.getElementById('view-' + name).hidden = name !== S.route.view;
     });
@@ -280,6 +281,10 @@ window.App = (function () {
 
   actions['nav'] = (el) => navigate(el.dataset.to);
   actions['reset-demo'] = () => {
+    if (S.route.view === 'mental-health-relevance' && actions['mh-reset']) {
+      actions['mh-reset']();
+      return;
+    }
     history.replaceState(null, '', '#annotator');
     location.reload();
   };
