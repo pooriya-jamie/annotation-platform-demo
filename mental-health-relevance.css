@@ -76,7 +76,10 @@
 .mh-answer-option input { flex-shrink: 0; accent-color: #126b59; width: 19px; height: 19px; margin: 0; }
 .mh-answer-option:has(input:focus-visible) { outline: 3px solid #7eb4a8; outline-offset: 3px; }
 .mh-answer-option.selected { border-color: #267c69; background: #edf7f3; }
-.mh-answer-hint { margin: 17px 0; font-size: 12px; line-height: 1.7; color: #78848c; }
+.mh-quick-guide { margin: 0 0 19px; padding: 15px 16px; border: 1px solid #d9e7e2; border-radius: 8px; background: #f4f9f7; color: #405c54; }
+.mh-quick-guide h3 { margin: 0 0 10px; font-size: 13px; color: #285c4f; }
+.mh-quick-guide p { margin: 9px 0 0; font-size: 12px; line-height: 1.65; }
+.mh-quick-guide p:first-of-type { margin-top: 0; }
 .mh-answer-reminder { font-size: 12px; line-height: 1.7; color: #4e6472; padding: 12px 13px; border-radius: 7px; background: #f2f6f9; }
 .mh-feedback { font-size: 12px; color: #72818a; min-height: 39px; padding: 13px 0 8px; }
 .mh-error { color: #aa3131; }

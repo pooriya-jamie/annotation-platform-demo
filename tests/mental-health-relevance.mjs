@@ -23,6 +23,14 @@ await page.getByRole('button', { name: 'Open annotation preview' }).click();
 assert.equal(await page.locator('input[name=mental_health_relevance]:checked').count(), 0);
 assert.equal(await page.locator('iframe').count(), 0);
 assert.equal(await page.locator('.mh-screenshots[open]').count(), 0);
+const quickGuide = page.getByRole('region', { name: 'Quick guide', exact: true });
+await quickGuide.waitFor({ state: 'visible' });
+assert.ok((await quickGuide.innerText()).includes('Choose Related when mental health is a substantial topic of the video. Examples include depression and anxiety, other mental-health conditions, personal experiences or symptoms, suicide or self-harm, coping, treatment, access to care, stigma, support, and recovery.'));
+for (const emphasis of ['Related', 'substantial topic', 'depression and anxiety']) {
+  assert.ok(await quickGuide.locator('strong').filter({ hasText: new RegExp(`^${emphasis}$`) }).count(), `${emphasis} is emphasized`);
+}
+assert.ok((await quickGuide.boundingBox()).y < (await page.locator('.mh-answer-options').boundingBox()).y, 'Quick guide appears before answer choices');
+assert.equal(await page.locator('.mh-answer-hint').count(), 0, 'No duplicate helper sentence below choices');
 await page.screenshot({ path: path.join(shots, 'desktop.png'), fullPage: true });
 await page.getByRole('button', { name: 'Play preview', exact: true }).click();
 await page.getByRole('button', { name: 'Pause preview', exact: true }).waitFor();
@@ -90,6 +98,7 @@ await page.getByRole('button', { name: 'Reset this preview' }).click();
 await page.getByRole('button', { name: 'Open annotation preview' }).click();
 await page.setViewportSize({ width: 390, height: 844 });
 await page.screenshot({ path: path.join(shots, 'mobile.png'), fullPage: true });
+assert.equal(await quickGuide.isVisible(), true, 'Guide stays visible on mobile without expanding anything');
 assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true, 'No mobile horizontal overflow');
 const playerBox = await page.locator('.mh-video-card').boundingBox();
 const answerBox = await page.locator('.mh-answer-panel').boundingBox();
