@@ -12,6 +12,7 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23116b5b'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='36' font-weight='700' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="mental-health-relevance.css?v=e27c3f8fc60f" />
+    <link rel="stylesheet" href="politics-relevance.css?v=5f7e9abf7508" />
   </head>
   <body>
     <!-- Inline icon sprite (lucide-style strokes on a 24 grid; no network requests) -->
@@ -79,6 +80,7 @@
           <a class="tour-link" href="#annotator" data-view="annotator"><span class="tour-num">1</span>Annotator</a>
           <a class="tour-link" href="#manager" data-view="manager"><span class="tour-num">2</span>Study manager</a>
           <a class="tour-link" href="#mental-health-relevance" data-view="mental-health-relevance">Mental Health preview</a>
+          <a class="tour-link" href="#politics-relevance" data-view="politics-relevance">Politics preview</a>
         </nav>
         <div class="tour-actions">
           <span class="demo-badge" title="Every name, account, post and label on this page is fictitious.">
@@ -150,6 +152,9 @@
       <section class="view" id="view-mental-health-relevance" aria-label="Mental Health video relevance preview" hidden>
         <div id="mh-preview-root"></div>
       </section>
+      <section class="view" id="view-politics-relevance" aria-label="Politics video relevance preview" hidden>
+        <div id="politics-preview-root"></div>
+      </section>
     </main>
     <footer class="site-footer">
       <p>&copy; 2026 Pooriya Jamie &middot; OASIS Lab. All rights reserved. Interested in using the platform? <a href="https://oasislab.science/" target="_blank" rel="noopener">Contact OASIS Lab</a>. Everything on this page is synthetic.</p>
@@ -170,9 +175,10 @@
 
     <script src="engine.js"></script>
     <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=d9a41c6f117d"></script>
     <script src="views-annotator.js"></script>
     <script src="views-manager.js"></script>
     <script src="mental-health-relevance.js?v=fa187059d514"></script>
+    <script src="politics-relevance.js?v=fcf79a0b7932"></script>
   </body>
 </html>
