@@ -20,7 +20,7 @@ videos or screenshots.
 | 1 | `#annotator` | One annotator's path in a browser frame: sign in → consent → My Tasks → training (5 worked examples + 5 practice items) → Mental Health safety orientation → task advisory → the three-column workspace → task complete |
 | 2 | `#manager` | The staff console: Upload (dry run, then commit), Datasets, Tasks (activate / pause / archive, split items with an overlap), Progress (per-annotator counts, needs-review list, percent agreement and Cohen's κ, the two-reviews-per-post agreement lab with a blinded third review and majority labels), Accounts, Training & Gold, Topics & Forms (versioned codebooks), Exports (a real CSV/JSON file is generated in the browser) |
 | 3 | `#mental-health-relevance` | Dedicated Mental Health — Video Relevance participant preview: instructions, responsive video-first workspace, one required answer, fallback screenshot viewer, breaks, safety skips, draft/save/retry behavior. TikTok, YouTube, and unavailable-player scenarios use illustrated placeholders, not study data. |
-| 4 | `#politics-relevance` | Dedicated Politics — Video Relevance participant preview: worldwide political relevance instructions, exact binary answer choices, separate access/language flags with a blank political answer, supplemental screenshots, breaks, draft/save/retry behavior, and illustrative completion policies. Three player layouts use placeholders, not study data. |
+| 4 | `#politics-relevance` | Dedicated Politics — Video Relevance participant preview matching the Mental Health layout: worldwide political relevance instructions, exactly two answer choices, supplemental screenshots, breaks, and draft/save/retry behavior. Three player layouts use placeholders, not study data. |
 
 The annotator and manager tours share one in-memory state. Labels saved in section 1 appear
 in section 2's Progress and agreement numbers at once. Pausing a task in
@@ -54,7 +54,7 @@ function names sit behind "For technical readers" toggles.
 - `app.js` — state, hash router, event delegation, dialog, toast, animation sequencer
 - `views-annotator.js`, `views-manager.js` — the two sections
 - `mental-health-relevance.js`, `mental-health-relevance.css` — isolated Mental Health relevance preview. No backend calls, external players, persistent storage, participant identifiers, or real evidence. Responses are temporary and reset on reload. Planned 100-video / eight-annotator totals are not imported or assigned records.
-- `politics-relevance.js`, `politics-relevance.css` — isolated Politics relevance preview. Exact answer values are `political` and `not_political/insufficient_visible_evidence`. Access and language flags always clear the political answer. The actual study's flag-completion decision remains pending; changing a preview policy only changes this in-memory illustration. No study package, participant credentials, model labels, or live assignments are included.
+- `politics-relevance.js`, `politics-relevance.css` — isolated Politics relevance preview. The only answer values are `political` and `not_political/insufficient_visible_evidence`. Only saved binary answers count as completed. If a video is inaccessible or its language cannot be understood, leave the answer blank, use Skip for now, and contact the study team; these problems are never negative labels. No study package, participant credentials, completion codes, model labels, or live assignments are included.
 
 ## Mental Health preview verification
 
@@ -70,9 +70,9 @@ It writes shareable instructions, desktop, and mobile images to the ignored
 ## Politics preview verification
 
 Run `node tests/politics-relevance.mjs` with the same Playwright settings.
-The check exercises both exact answers, independent access/language flags,
-blank answers on flagged items, validation, draft/save separation, failed-save
-retry, skips, breaks, completion-policy illustrations, keyboard screenshot
+The check exercises both exact answers, absence of additional answer options,
+blank answers on unavailable items, validation, draft/save separation, failed-save
+retry, skips, breaks, saved-answer completion counts, keyboard screenshot
 navigation, mobile layout, reload isolation, and the existing tours and
 Mental Health preview. It checks that no backend or external media requests
 are made. Images and a verification receipt are written to the ignored
