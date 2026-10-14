@@ -82,13 +82,13 @@
 
   function workspace() {
     return '<div class="pol-workspace-top"><div class="pol-progress"><div><strong>' + done() + ' of 3 preview items completed</strong><span>Layout ' + (s.index + 1) + ' of 3</span></div><progress value="' + done() + '" max="3" aria-label="Saved preview answers"></progress></div>' + button('instructions', icon('book') + ' Instructions', 'btn-secondary btn-sm') + '</div>' +
-      '<div class="pol-session-bar"><span>' + icon('info') + ' Save your answer before moving on.</span><div>' + button('break', icon('coffee') + ' Take a break', 'btn-ghost btn-sm') + button('leave', icon('log-out') + ' Save &amp; leave', 'btn-ghost btn-sm') + '</div></div>' +
+      '<div class="pol-session-bar"><span>' + icon('info') + ' Save your answer before moving on.</span><div>' + button('leave', icon('log-out') + ' Save &amp; leave', 'btn-ghost btn-sm') + '</div></div>' +
       '<div class="pol-layout"><section aria-label="Video and supplemental screenshots">' + player() + '</section>' + answer() + '</div>' +
       '<div class="pol-preview-controls"><span>Try another layout:</span>' + scenes.map((scene, index) => button('scene', (index + 1) + '. ' + scene.platform + (scene.unavailable ? ' unavailable' : ''), 'btn-ghost btn-sm', 'data-scene="' + index + '" ' + (index === s.index ? 'disabled' : ''))).join('') + previewTools() + '</div>';
   }
 
   function paused() {
-    return '<section class="card pol-rest-screen">' + icon('coffee') + '<h2>' + (s.step === 'break' ? 'Take your time' : 'Your draft is kept in this tab') + '</h2><p>The media is covered. Return whenever you are ready.</p><p>Save &amp; leave keeps a temporary draft; it does not mark an item completed. Reloading the page resets all preview responses.</p>' + button('resume', 'Return to preview', 'btn-primary') + '</section>';
+    return '<section class="card pol-rest-screen">' + icon('save') + '<h2>Your draft is kept in this tab</h2><p>The media is covered. Return whenever you are ready.</p><p>Save &amp; leave keeps a temporary draft; it does not mark an item completed. Reloading the page resets all preview responses.</p>' + button('resume', 'Return to preview', 'btn-primary') + '</section>';
   }
 
   function finish() {
@@ -151,7 +151,6 @@
   };
   A.actions['pol-skip'] = () => confirmMove(() => { s.skipped.add(s.index); next(); });
   A.actions['pol-scene'] = (el) => confirmMove(() => { const index = Number(el.dataset.scene); if (Number.isInteger(index) && index >= 0 && index < scenes.length) move(index); });
-  A.actions['pol-break'] = () => { s.playing = false; s.step = 'break'; render(); };
   A.actions['pol-leave'] = () => { s.playing = false; s.step = 'leave'; render(); };
   A.actions['pol-resume'] = () => { s.step = 'workspace'; render(); };
   A.actions['pol-fail'] = () => { s.failNext = true; A.toast('The next preview save will show a retry message without losing your selection.'); };

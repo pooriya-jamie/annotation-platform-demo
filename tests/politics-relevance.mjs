@@ -71,9 +71,7 @@ try {
   assert.equal(await negative().inputValue(), 'not_political/insufficient_visible_evidence');
   await political().check();
   assert.equal(await political().inputValue(), 'political');
-  await panel().getByRole('button', { name: 'Take a break', exact: true }).click();
-  await panel().getByRole('heading', { name: 'Take your time' }).waitFor();
-  await panel().getByRole('button', { name: 'Return to preview' }).click();
+  assert.equal(await panel().getByRole('button', { name: 'Take a break', exact: true }).count(), 0);
   assert.equal(await political().isChecked(), true); assert.match(await progress().innerText(), /0 of 3/);
   await panel().getByRole('button', { name: 'Save & leave', exact: true }).click();
   await panel().getByRole('heading', { name: 'Your draft is kept in this tab' }).waitFor();
